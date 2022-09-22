@@ -5,6 +5,8 @@ GET http://localhost:3000/movies/
 POST http://localhost:3000/movies/
 Content-Type: application/json
 
+  
+
 {
     "directorId": 6,
     "movieName": "Jurassic Park",
@@ -12,19 +14,27 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/movies/:movieId/
+GET http://localhost:3000/movies/1/
 
 ###
 
-PUT http://localhost:3000/movies/:movieId/
+PUT http://localhost:3000/movies/5/
+
+```
+{
+  "directorId": 24,
+  "movieName": "Thor",
+  "leadActor": "Christopher Hemsworth"
+}
+```
 
 ###
 
-DELETE http://localhost:3000/movies/:movieId/
+DELETE http://localhost:3000/movies/10/
 
 ###
 GET http://localhost:3000/directors/
 
 ###
 
-GET http://localhost:3000/directors/:directorId/movies/
+GET http://localhost:3000/directors/5/movies/

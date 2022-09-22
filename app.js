@@ -48,16 +48,20 @@ Express.post("/movies/", async (request, response) => {
   try {
     const movieQuery = request.body;
     const { directorId, movieName, leadActor } = movieQuery;
-    const movieDetailsQuery = ` INSERT INTO movie (director_id, movie_name, lead_actor) VALUES (${directorId},${movieName},${leadActor})`;
+    const movieDetailsQuery = `
+        INSERT INTO 
+            movie (director_id, movie_name, lead_actor) 
+        VALUES 
+            (${directorId},${movieName},${leadActor});`;
     const movieResponse = await db.run(movieDetailsQuery);
     response.send("Movie Successfully Added");
   } catch (e) {
-    console.log("Error");
+    console.log(e.message);
   }
 });
 
 Express.get("/movies/:movieId/", async (request, response) => {
-  const movieId = request.params;
+  const { movieId } = request.params;
   const getMovieDetailQuery = `select * from movie where movie_id = ${movieId}`;
   const movieDbResponse = await db.get(getMovieDetailQuery);
   response.send(convertDbObjectToResponseObject(movieDbResponse));
@@ -66,12 +70,18 @@ Express.get("/movies/:movieId/", async (request, response) => {
 Express.put("/movies/:movieId/", async (request, response) => {
   const { movieId } = request.params;
   const { directorId, movieName, leadActor } = request.body;
-  const updateMovieQuery = ` update movie set director_id = ${directorId},movie_name = ${movieName},lead_actor = ${leadActor} where movie_id = ${movieId}`;
+  const updateMovieQuery = `
+    update 
+        movie 
+    set 
+        director_id = ${directorId},movie_name = ${movieName},lead_actor = ${leadActor} 
+    where 
+        movie_id = ${movieId}`;
   await db.run(updateMovieQuery);
   response.send("Movie Details Updated");
 });
 
-Express.delete(" /movies/:movieId/", async (request, response) => {
+Express.delete("/movies/:movieId/", async (request, response) => {
   const { movieId } = request.params;
   const deleteQuery = `
     DELETE FROM
